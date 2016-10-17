@@ -1,0 +1,19 @@
+[4G_COM_Single]
+CheckStr=4G
+RdName="B (#)"
+RdCmd=IMAG?
+SwpAvl=TRUE
+OutName="B (#): Sweep Up/B (#): Sweep Down/B (#): Sweep Zero"
+OutCmd="Sweep up slow&Sweep pause slow/Sweep down slow&Sweep pause slow/Sweep zero slow&Sweep pause slow"
+AdvPara="Chan 2,1/9600/8/0/10,\0A"
+[LI5640]
+CheckStr=LI5640
+RdName=#_D1&#_D2
+RdCmd=DOUT?
+[LI5640_2]
+CheckStr=LI5640
+RdName=#_D1&#_D2/#_AO1/#_AO2
+RdCmd="DOUT?/AUXV? 1/AUXV? 2"
+SwpAvl=FALSE
+OutName="#_AO1: ¡À10.000V/#_AO2: ¡À10.000V"
+OutCmd="AUXV 1, #/AUXV 2, #"

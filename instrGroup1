@@ -1,0 +1,8 @@
+[GPIB0::19::INSTR]
+Model=4G_COM_Single
+[GPIB0::1::INSTR]
+Model=LI5640
+Alias=L1
+[GPIB0::2::INSTR]
+Model=LI5640_2
+Alias=L2
