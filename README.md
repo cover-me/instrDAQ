@@ -4,12 +4,16 @@ Acquiring data from a group of instruments while triggering a continuous or step
 ## Table of Contents
 * [Overview](#ovw)
 * [How to](#how2)
+
 ## <a name="ovw">Overview</a>
+
 ![set up](https://github.com/cover-me/instrDAQ/blob/master/documentation/images/setup.jpg)
 ![schematic](https://github.com/cover-me/instrDAQ/blob/master/documentation/images/schematic.png)
 ![snapshot-Main.vi](https://github.com/cover-me/instrDAQ/blob/master/documentation/images/snapshot-main.png)
 ![snapshot-AcquisitionMain.vi](https://github.com/cover-me/instrDAQ/blob/master/documentation/images/snapshot-acquisition.png)
+
 ## <a name="how2">How to</a>
+
 ### Read data from instruments, like an SR830 lock-in amplifiers or a 2400 SourceMeter
 * After installing required drivers for GPIB (or other interfaces) and NI-VISA, connet the instruments to your computer. Check the connection by sending a simple command to the instruments. Most instruments support the command `*IDN?` which will query the identify of the instruments.
 * Find out the command for readings in the manual of the instruments. Usuanlly there is a chapter listing all the commands and their usages. For SR830, the command returning x and y is `SNAP?1,2`.
