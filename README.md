@@ -40,7 +40,7 @@ Alias=L2
 Model=24xx
 Alias=smu1
 ```
-Replace the addresses ([GPIB0::1::INSTR]) with correct ones. The program will try sending the command `*IDN?` to each address in file "instrGroup1" to check if the instrument has been turned on or the _Model_ in "instrGroup1" is correct, if _CheckStr_ of corresponding _Model_ is contained in the returning string, the instrument will be listed in the front panel of the program. If you don't want to check at or if the instrument doesn't support the command `*IDN?`, just delete that line (CheckStr=***) in file "Model".  
+Replace the addresses ([GPIB0::1::INSTR]) with correct ones. The program will try sending the command `*IDN?` to each address in file "instrGroup1" to check if the instrument has been turned on or the _Model_ in "instrGroup1" is correct, if _CheckStr_ of corresponding _Model_ is contained in the returning string, the instrument will be listed in the front panel of the program. If you don't want to check or if the instrument doesn't support the command `*IDN?`, just delete that line (CheckStr=***) in file "Model".  
 _RdCmd_ is the command querying readings.  
 _RdName_ is the name for readings queried by _RdCmd_. If there are many readings returned by one command, seperate them with "&".
 The _Alias_ is used to replace the "#" in _RdName_.
@@ -53,7 +53,7 @@ RdName=#_I/#_V&#_time
 RdCmd=:SOUR:CURR?/:SENSE:DATA?
 ```
 ### Ramp the output, for example, from an voltage source or magnet power supply.
-*	If the ramping requires you to send commands at each loop, add `SwpAvl=FALSE` in corresponding model. For example, if you want ramp the output of a sourcemeter from 0V to 1V, step=0.1V, you should send 11 commands. The program of ramping runs in the computer rather than in the instruments.  The _OutName_ should begin with a name existing in _RdName_, followed by a ":" and then whatever else. The program determines the value of the output by the reading with the name before ":". The ramping stops when the that value reaches your setting or a stop bottom is pressed. The "#" in `OutCmd` will be replaced with real numbers in each loop. Following are examples for 2400 and 2600 series SourceMeter.
+*	If the ramping requires you sending commands at each loop, add `SwpAvl=FALSE` in corresponding model. For example, if you want ramp the output of a sourcemeter from 0V to 1V, step=0.1V, you should send 11 commands. The program of ramping runs in the computer rather than in the instruments.  The _OutName_ should begin with a name existing in _RdName_, followed by a ":" and then whatever else. The program determines the value of the output by readings with the name before ":". The ramping stops when your setting is reached or a stop bottom is pressed. The "#" in _OutCmd_ will be replaced with real numbers in each loop. Following are examples for 2400 and 2600 series SourceMeter.
 ```
 [24xx]
 CheckStr=24
