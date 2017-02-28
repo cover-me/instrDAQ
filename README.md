@@ -28,7 +28,7 @@ CheckStr=24
 RdName=#_V&#_I&#_R&#_t&#_s
 RdCmd=:READ?
 ```  
-	and the following code to the file "instrGroup1"
+and the following code to the file "instrGroup1"
 ```
 [GPIB0::1::INSTR]
 Model=SR830
@@ -39,11 +39,11 @@ Alias=L2
 [GPIB0::11::INSTR]
 Model=24xx
 Alias=smu1
-	```
-	Replace the addresses ([GPIB0::1::INSTR]) with correct ones. The program will try sending the command `*IDN?` to each address in file "instrGroup1" to check if the instrument has been turned on or the _Model_ in "instrGroup1" is correct, if _CheckStr_ of corresponding _Model_ is contained in the returning string, the instrument will be listed in the front panel of the program. If you don't want to check at or if the instrument doesn't support the command `*IDN?`, just delete that line (CheckStr=***) in file "Model".  
-	_RdCmd_ is the command querying readings.  
-	_RdName_ is the name for readings queried by _RdCmd_. If there are many readings returned by one command, seperate them with "&".
-	The _Alias_ is used to replace the "#" in _RdName_.
+```
+Replace the addresses ([GPIB0::1::INSTR]) with correct ones. The program will try sending the command `*IDN?` to each address in file "instrGroup1" to check if the instrument has been turned on or the _Model_ in "instrGroup1" is correct, if _CheckStr_ of corresponding _Model_ is contained in the returning string, the instrument will be listed in the front panel of the program. If you don't want to check at or if the instrument doesn't support the command `*IDN?`, just delete that line (CheckStr=***) in file "Model".  
+_RdCmd_ is the command querying readings.  
+_RdName_ is the name for readings queried by _RdCmd_. If there are many readings returned by one command, seperate them with "&".
+The _Alias_ is used to replace the "#" in _RdName_.
 ### Add more than one commands in a single Model
 *   Just seperate them with "/", 6221 current source for example,
 ```
