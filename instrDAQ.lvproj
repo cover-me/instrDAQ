@@ -64,13 +64,13 @@
 			<Item Name="plus1.vi" Type="VI" URL="../VIs/plus1.vi"/>
 			<Item Name="id2echo.vi" Type="VI" URL="../VIs/id2echo.vi"/>
 			<Item Name="addterm.vi" Type="VI" URL="../VIs/addterm.vi"/>
+			<Item Name="filePara2Str.vi" Type="VI" URL="../VIs/filePara2Str.vi"/>
 			<Item Name="rd name split.vi" Type="VI" URL="../VIs/rd name split.vi"/>
 			<Item Name="clear interface.vi" Type="VI" URL="../VIs/clear interface.vi"/>
+			<Item Name="setVItitle.vi" Type="VI" URL="../VIs/setVItitle.vi"/>
 		</Item>
 		<Item Name="main.vi" Type="VI" URL="../main.vi"/>
 		<Item Name="Paramecium.ico" Type="Document" URL="../Paramecium.ico"/>
-		<Item Name="filePara2Str.vi" Type="VI" URL="../VIs/filePara2Str.vi"/>
-		<Item Name="setVItitle.vi" Type="VI" URL="../VIs/setVItitle.vi"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
 				<Item Name="Beep.vi" Type="VI" URL="/&lt;vilib&gt;/Platform/system.llb/Beep.vi"/>
