@@ -69,6 +69,8 @@
 		</Item>
 		<Item Name="main.vi" Type="VI" URL="../main.vi"/>
 		<Item Name="Paramecium.ico" Type="Document" URL="../Paramecium.ico"/>
+		<Item Name="filePara2Str.vi" Type="VI" URL="../VIs/filePara2Str.vi"/>
+		<Item Name="setVItitle.vi" Type="VI" URL="../VIs/setVItitle.vi"/>
 		<Item Name="Dependencies" Type="Dependencies">
 			<Item Name="vi.lib" Type="Folder">
 				<Item Name="Beep.vi" Type="VI" URL="/&lt;vilib&gt;/Platform/system.llb/Beep.vi"/>
