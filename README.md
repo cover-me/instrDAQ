@@ -104,7 +104,9 @@ A rightmost `/` in square brackets or a rightmost `,` can be omitted. For exampl
 ### Sweeping command with two parameters
 ### Delay after executing a command
 `cmd@seconds@message`
+
 For example, `SET:SYS:VRM:RVST:MODE:RATE:RATE:0.1:VSET:[# 0 ##]@5@seting parameters...`
 ### Add a model that don't support VISA read and write
 Write a wrapper program like this https://github.com/cover-me/tcp-visa-server. Communicate with the wrapper function using `VISA read` and `VISA write`.
+
 ...
