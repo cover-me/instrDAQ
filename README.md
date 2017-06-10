@@ -95,8 +95,8 @@ AdvPara = [init cmd],[echo/baud rate/data bits/parity/stop bits],[terminator/mul
 Each parameter, seperated by `,` or `/` on the right side of the `=`, can be left empty if default value is desired. For example, `AdvPara = ,////,/,/` will set all advanced parameters to their default values.
 A rightmost `/` in square brackets or a rightmost `,` can be omitted. For example, `,////,/,/` equals to `,///,,` equals to `,,,` equals to `,,` equals to an empty string. `,////,/,/0` does not equal to `,////,/,0` since the sixth `/` is not rightmost.
 * `init cmd`: A command which will send to the instrument during the initialization. Since `,` has its special meaning in `AdvPara`, an `init cmd` containing `,` would lead to errors in current version. 
-* `echo`: 0 if no command echoes. 1 if the command for reading data echoes. 2 if the command for setting echoes. 3 if both commands echo. If a command echoes, you should read for a extra time before getting the desired response.
-* `baud rate/data bits/parity/stop bits`:Parameters for a serial port. Valid only if the interface type is the serial port and these 4 parameters and `echo` are all not empty.
+* `echo`: 0 if no command echoes. 1 if the command for reading data echoes. 2 if the command for setting echoes. 3 if both commands echo. If a command echoes, you should read for an extra time before getting the desired response.
+* `baud rate/data bits/parity/stop bits`: Parameters for a serial port. Valid only if the interface type is the serial port and these 4 parameters and `echo` are all not empty.
 * `terminator`: Terminator of commands. 
 * `multiline?`: By default, commands sent to the same instrument will be packed into one string, seperated by `;`. Add something like `AdvPara=,,/FALSE` to avoid packing.
 * `count`: Number of bytes read by the `VISA Read` function. Valid only if >128.
@@ -104,7 +104,9 @@ A rightmost `/` in square brackets or a rightmost `,` can be omitted. For exampl
 ### Sweeping command with two parameters
 ### Delay after executing a command
 `cmd@seconds@message`
+
 For example, `SET:SYS:VRM:RVST:MODE:RATE:RATE:0.1:VSET:[# 0 ##]@5@seting parameters...`
 ### Add a model that don't support VISA read and write
 Write a wrapper program like this https://github.com/cover-me/tcp-visa-server. Communicate with the wrapper function using `VISA read` and `VISA write`.
+
 ...
