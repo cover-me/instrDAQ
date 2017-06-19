@@ -102,10 +102,13 @@ A rightmost `/` in square brackets or a rightmost `,` can be omitted. For exampl
 * `count`: Number of bytes read by the `VISA Read` function. Valid only if >128.
 * `offset`: The program converts every number in a string returned by the `VISA Read` function. Use `offset` to intercepts a portion of the string.
 ### Sweeping command with two parameters
+The `Step` on the program interface can be used as a second parameter for `OutCmd` when the value of `SwpAvl` is `TRUE` and there is a `##` in `OutCmd`. The `#` in `OutCmd` will be replaced with `To` and the `##` with `Step`.
+### a read command returns too many readings
+`RdName=name{n}` equals to `RdName=name1&name2&name3...$namen`
 ### Delay after executing a command
 `cmd@seconds@message`
 
-For example, `SET:SYS:VRM:RVST:MODE:RATE:RATE:0.1:VSET:[# 0 ##]@5@seting parameters...`
+For example, we can set the `OutCmd` of the Oxford's VRM as `SET:SYS:VRM:RVST:MODE:RATE:RATE:0.1:VSET:[# 0 ##]@5@seting parameters...`
 ### Add a model that don't support VISA read and write
 Write a wrapper program like this https://github.com/cover-me/tcp-visa-server. Communicate with the wrapper function using `VISA read` and `VISA write`.
 
