@@ -31,7 +31,7 @@ CheckStr=24
 RdName=#_V&#_I&#_R&#_t&#_s
 RdCmd=:READ?
 ```  
-and the following code to the file "instrGroup1". If you don't see the file, create one in the same folder with file 'Model'
+and the following code to the file "instrGroup1". If you don't see the file, create one in the same folder as file 'Model'
 ```
 [GPIB0::1::INSTR]
 Model=SR830
