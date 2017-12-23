@@ -1,6 +1,6 @@
 # instrDAQ
 ## Description
-Acquiring data from a group of instruments while triggering a continuous or step scan from one of them.
+Scan with a continuous output like a magnetic field or a discrete output like a gate voltage, and acquire data at the same time.
 ## Table of Contents
 * [Overview](#ovw)
 * [How to](#how2)
@@ -13,11 +13,14 @@ Acquiring data from a group of instruments while triggering a continuous or step
 ![snapshot-AcquisitionMain.vi](https://github.com/cover-me/instrDAQ/blob/master/documentation/images/snapshot-acquisition.png)
 
 ## <a name="how2">How to</a>
-
-### Read data from instruments, like an SR830 lock-in amplifiers or a 2400 SourceMeter
-* After installing required drivers for GPIB (or other interfaces) and NI-VISA, connet the instruments to your computer. Check the connection by sending a simple command to the instruments. Most instruments support the command `*IDN?` which will query the identify of the instruments.
-* Find out the command for readings in the manuals of instruments. Usuanlly there is a chapter listing all the commands and their usages. For SR830, the command returning x and y is `SNAP?1,2`
-* Add the following code to the file "Model"
+### Install
+* Download the whole project and open it with NI LabVIEW 8.6 or later.
+* Use it by running main.vi or compile it into an exe. The former method enables one to run the program on a Mac even if it was developed on a PC. The latter method enables one to run the program in a computer without LabVIEW installed.
+* Make sure NI-VISA and other device drivers (such as NI-4882) have been installed.
+### Read data from instruments, such as an SR830 lock-in amplifier or a 2400 sourcemeter
+* Connect instruments to your computer. Check the connection by sending simple commands. Many instruments would response to the command `*IDN?`, which queries the instrument identification. You can know instruments by reading their manuals.
+* Find out the command for reading data. The command you need is usually listed somewhere in the manual. For SR830, the command returning x and y is `SNAP?1,2`.
+* Add the following code to the file "Model". You can run main.vi or exe without a Model file, they will generate an empty one, usually in the same folder but sometimes in the parent folder (depends on LabVIEW versions and operating systems).
 ```
 [SR830]
 CheckStr=830
@@ -28,7 +31,7 @@ CheckStr=24
 RdName=#_V&#_I&#_R&#_t&#_s
 RdCmd=:READ?
 ```  
-and the following code to the file "instrGroup1"
+and the following code to the file "instrGroup1". If you don't see the file, create one in the same folder with file 'Model'
 ```
 [GPIB0::1::INSTR]
 Model=SR830
@@ -40,10 +43,10 @@ Alias=L2
 Model=24xx
 Alias=smu1
 ```
-Replace the addresses ([GPIB0::1::INSTR]) with correct ones. The program will try sending the command `*IDN?` to each address in file "instrGroup1" to check if the instrument has been turned on or the _Model_ in "instrGroup1" is correct, if _CheckStr_ of corresponding _Model_ is contained in the returning string, the instrument will be listed in the front panel of the program. If you don't want to check or if the instrument doesn't support the command `*IDN?`, just delete that line (CheckStr=***) in file "Model".  
-_RdCmd_ is the command querying readings.  
-_RdName_ is the name for readings queried by _RdCmd_. If there are many readings returned by one command, seperate them with "&".
-The _Alias_ is used to replace the "#" in _RdName_.
+Replace the addresses ([GPIB0::1::INSTR]) with correct ones. The program will try sending `*IDN?` to each address listed here, to check whether an instrument is powered on and whether the _Model_ specified is correct. If there is a response containing the _CheckStr_, the instrument will be listed in the front panel of the program. If you don't want to check or if the instrument wouldn't response to `*IDN?`, just delete that line (CheckStr=***) in file "Model".  
+_RdCmd_ is the command querying readings.
+_RdName_ is the name of readings. If there are multiple readings returned by one command, seperate them with "&".
+_Alias_ is used to replace the "#" in _RdName_.
 ### Add more than one commands in a single Model
 *   Just seperate them with "/", 6221 current source for example,
 ```
