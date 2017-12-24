@@ -57,7 +57,7 @@ Alias=L2
 Model=24xx
 Alias=smu1
 ```
-Replace the addresses ([GPIB0::1::INSTR]) with correct ones. Run the program. The program will try sending `*IDN?` to each address listed here to check whether an instrument is powered on and whether the _Model_ specified in "instrGroup1" is correct. A check is passed if there is a response and the response contains the _CheckStr_. The instrument will then be listed in the front panel of the program. If you don't want a check or if the instrument wouldn't response to `*IDN?`, just delete that line (CheckStr=\*\*\*) in "Model".  
+Replace the addresses ([GPIB0::1::INSTR]) with correct ones. Run the program. The program will try sending `*IDN?` to each address listed here to check whether an instrument is powered on and whether the _Model_ specified in "instrGroup1" is correct. A check is passed if there is a response and the response contains the _CheckStr_ in file "Model". The instrument will then be listed in the front panel of the program. If you don't want a check or if the instrument wouldn't response to `*IDN?`, just delete that line (CheckStr=\*\*\*) in "Model".  
 
 _RdCmd_ is the command querying readings.
 
@@ -73,7 +73,7 @@ CheckStr=6221
 RdName=#_I/#_V&#_time
 RdCmd=:SOUR:CURR?/:SENSE:DATA?
 ```
-### Ramp the output, for example, from an voltage source or magnet power supply.
+### Sweep the output, for example, of a voltage source or a magnet power supply.
 *	If the ramping requires you sending commands at each loop, add `SwpAvl=FALSE` in corresponding model. For example, if you want ramp the output of a sourcemeter from 0V to 1V, step=0.1V, you should send 11 commands. The program of ramping runs in the computer rather than in the instruments.  The _OutName_ should begin with a name existing in _RdName_, followed by a ":" and then whatever else. The program determines the value of the output by readings with the name before ":". The ramping stops when your setting is reached or a stop bottom is pressed. The "#" in _OutCmd_ will be replaced with real numbers in each loop. Following are examples for 2400 and 2600 series SourceMeter.
 ```
 [24xx]
@@ -122,15 +122,15 @@ A rightmost `/` in square brackets or a rightmost `,` can be omitted. For exampl
 * `multiline?`: By default, commands sent to the same instrument will be packed into one string, seperated by `;`. Add something like `AdvPara=,,/FALSE` to avoid packing.
 * `count`: Number of bytes read by the `VISA Read` function. Valid only if >128.
 * `offset`: The program converts every number in a string returned by the `VISA Read` function. Use `offset` to intercepts a portion of the string.
-### Sweeping command with two parameters
+### Sweep with commands requiring two parameters
 The `Step` on the program interface can be used as a second parameter for `OutCmd` when the value of `SwpAvl` is `TRUE` and there is a `##` in `OutCmd`. The `#` in `OutCmd` will be replaced with `To` and the `##` with `Step`.
-### a read command returns too many readings
-`RdName=name{n}` equals to `RdName=name1&name2&name3...$namen`
+### a reading command returns vary vary many readings
+Use `RdName=name{n}`, which equals to `RdName=name1&name2&name3...$namen`
 ### Delay after executing a command
 `cmd@seconds@message`
 
 For example, we can set the `OutCmd` of the Oxford's VRM as `SET:SYS:VRM:RVST:MODE:RATE:RATE:0.1:VSET:[# 0 ##]@5@seting parameters...`
-### Add a model that don't support VISA read and write
+### Add a model that doesn't talk to VISA read and write
 Write a wrapper program like this https://github.com/cover-me/tcp-visa-server. Communicate with the wrapper function using `VISA read` and `VISA write`.
 
 ...
