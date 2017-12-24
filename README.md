@@ -1,6 +1,12 @@
 # instrDAQ
 ## Description
-Scan with a continuous output like a magnetic field or a discrete output like a gate voltage, and acquire data at the same time.
+* Acquire data from a group of instruments after triggering a continuous or discrete sweep from one of them.
+
+  * A continuous sweep sweeps a continous output such as a magnetic field. The sweep is done by instruments themselves and a command is needed to pause it.
+  
+  * A discrete sweep sweeps a discrete output such as a gate vlotage. The sweep is done by the program and a the value of output jumps discretely.
+    
+* Sweep multiple outputs simultaneously by this program is possible, if you put some magic strings in the file "Model" or work with a wrapper program (write it yourself). Another choice is use to other programs, such as qtlab, a python-based data acquisition program.
 ## Table of Contents
 * [Overview](#ovw)
 * [How to](#how2)
@@ -14,12 +20,12 @@ Scan with a continuous output like a magnetic field or a discrete output like a 
 
 ## <a name="how2">How to</a>
 ### Install
-* Download the whole project and open it with NI LabVIEW 8.6 or later.
-* Use it by running main.vi or compile it into an exe. The former method enables one to run the program on a Mac even if it was developed on a PC. The latter method enables one to run the program in a computer without LabVIEW installed.
+* Download the whole project and open it with LabVIEW 8.6 or later versions.
+* Use the program by running main.vi or compiling it into an exe. The former method enables one to run the program on a Mac even if it was developed on a PC. The latter method enables one to run the program in a computer without LabVIEW installed.
 * Make sure NI-VISA and other device drivers (such as NI-4882) have been installed.
 ### Read data from instruments, such as an SR830 lock-in amplifier or a 2400 sourcemeter
-* Connect instruments to your computer. Check the connection by sending simple commands. Many instruments would response to the command `*IDN?`, which queries the instrument identification. You can know instruments by reading their manuals.
-* Find out the command for reading data. The command you need is usually listed somewhere in the manual. For SR830, the command returning x and y is `SNAP?1,2`.
+* Connect instruments to your computer. Check the connection by sending simple commands. Many instruments would response to the command `*IDN?`, which queries the instrument identifications. You can know instruments by reading their manuals.
+* Find out the command for taking data. Commands you need are usually listed somewhere in the manuals. For SR830, the command returning x and y is `SNAP?1,2`.
 * Add the following code to the file "Model". You can run main.vi or exe without a Model file, they will generate an empty one, usually in the same folder but sometimes in the parent folder (depends on LabVIEW versions and operating systems).
 ```
 [SR830]
@@ -31,7 +37,15 @@ CheckStr=24
 RdName=#_V&#_I&#_R&#_t&#_s
 RdCmd=:READ?
 ```  
-and the following code to the file "instrGroup1". If you don't see the file, create one in the same folder as file 'Model'
+Make sure there are two other files, named "config.ini" and "instrGroup1", in the sample file as "Model". If they don't exist, create them. Write the following code into "config.ini":
+```
+[config]
+instrGroup=instrGroup1
+user=user1,user2
+```
+The code specifies a file name (which is "instrGroup1" here) for the program to get address information of instruments and specifies user names ("user1" and "user2"). 
+
+Add the following code to the file "instrGroup1".
 ```
 [GPIB0::1::INSTR]
 Model=SR830
@@ -43,10 +57,14 @@ Alias=L2
 Model=24xx
 Alias=smu1
 ```
-Replace the addresses ([GPIB0::1::INSTR]) with correct ones. The program will try sending `*IDN?` to each address listed here, to check whether an instrument is powered on and whether the _Model_ specified is correct. If there is a response containing the _CheckStr_, the instrument will be listed in the front panel of the program. If you don't want to check or if the instrument wouldn't response to `*IDN?`, just delete that line (CheckStr=***) in file "Model".  
+Replace the addresses ([GPIB0::1::INSTR]) with correct ones. Run the program. The program will try sending `*IDN?` to each address listed here to check whether an instrument is powered on and whether the _Model_ specified in "instrGroup1" is correct. A check is passed if there is a response and the response contains the _CheckStr_. The instrument will then be listed in the front panel of the program. If you don't want a check or if the instrument wouldn't response to `*IDN?`, just delete that line (CheckStr=\*\*\*) in "Model".  
+
 _RdCmd_ is the command querying readings.
+
 _RdName_ is the name of readings. If there are multiple readings returned by one command, seperate them with "&".
+
 _Alias_ is used to replace the "#" in _RdName_.
+
 ### Add more than one commands in a single Model
 *   Just seperate them with "/", 6221 current source for example,
 ```
