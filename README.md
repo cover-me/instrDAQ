@@ -6,7 +6,7 @@
   
   * A discrete sweep sweeps a discrete output such as a gate vlotage. The sweep is done by the program and a the value of output jumps discretely.
     
-* Sweep multiple outputs simultaneously by this program is possible, if you put some magic strings in the file "Model" or work with a wrapper program (write it yourself). Another choice is use to other programs, such as qtlab, a python-based data acquisition program.
+* Sweep multiple outputs simultaneously by this program is possible, if you put some magic strings in the file "Model" or work with a wrapper program (write it yourself). Another option is to try other programs, such as qtlab, a python-based data acquisition program.
 ## Table of Contents
 * [Overview](#ovw)
 * [How to](#how2)
