@@ -1,12 +1,21 @@
 # instrDAQ
 ## Description
-* Acquire data from a group of instruments after triggering a continuous or discrete sweep from one of them.
+* This program acquires data from a group of instruments after triggering a continuous or discrete sweep from one of them.
 
-  * A continuous sweep sweeps a continous output such as a magnetic field. The sweep is done by instruments themselves and a command is needed to pause it.
+  * A continuous sweep sweeps a continous output such as a magnetic field or the time. The sweep is done by instruments themselves and the program only triggers it. A command may be needed to pause the sweep.
   
-  * A discrete sweep sweeps a discrete output such as a gate vlotage. The sweep is done by the program and a the value of output jumps discretely.
-    
-* Sweep multiple outputs simultaneously by this program is possible, if you put some magic strings in the file "Model" or work with a wrapper program (write it yourself). Another option is to try other programs, such as qtlab, a python-based data acquisition program.
+  * A discrete sweep sweeps a discrete output such as a gate vlotage. The work is done by the program: the program sends commands to an instrument one by one, setting the value of an output discretely.
+  
+  * 2D or 3D scan can be made with an sweep sequence.
+  
+  * More complicated sweeps are possible. You may need to wrote your own wrapper program to wrap the complicated sweeps or trying other programs such as qtlab (an open-source python-based data acquisition program).
+
+* The program communicates with instruments by VISA
+
+  * VISA is like a translator. Commands can be send to (read from) insturments by the VISA write (read) function, no matter what kind of interface is used. One can simply use VISA write and read functions to talk to instruments through serial, GPIB, ethernet or USB ports.
+
+  * The addresses, commands and interface/communication parameters are collected in text files. New instrument supports can be added without changing the program itself!
+
 ## Table of Contents
 * [Overview](#ovw)
 * [How to](#how2)
