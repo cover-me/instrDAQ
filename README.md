@@ -19,6 +19,7 @@
 ## Table of Contents
 * [Overview](#ovw)
 * [How to](#how2)
+* [Known problems](#np)
 
 ## <a name="ovw">Overview</a>
 
@@ -133,7 +134,7 @@ A rightmost `/` in square brackets or a rightmost `,` can be omitted. For exampl
 * `offset`: The program converts every number in a string returned by the `VISA Read` function. Use `offset` to intercepts a portion of the string.
 ### Sweep with commands requiring two parameters
 The `Step` on the program interface can be used as a second parameter for `OutCmd` when the value of `SwpAvl` is `TRUE` and there is a `##` in `OutCmd`. The `#` in `OutCmd` will be replaced with `To` and the `##` with `Step`.
-### a reading command returns vary vary many readings
+### a reading command returns very very many readings
 Use `RdName=name{n}`, which equals to `RdName=name1&name2&name3...$namen`
 ### Delay after executing a command
 `cmd@seconds@message`
@@ -143,3 +144,7 @@ For example, we can set the `OutCmd` of the Oxford's VRM as `SET:SYS:VRM:RVST:MO
 Write a wrapper program like this https://github.com/cover-me/tcp-visa-server. Communicate with the wrapper function using `VISA read` and `VISA write`.
 
 ...
+## <a name="np">Known problems</a>
+In order to be more effecient, the program sends commands to all instruments before reading any replies. Sometimes one wants to send multiple commands to an instrument for multiple readings. If the instrument works well with multiple commands in one line like `cmd1;cmd2;cmd3`, that is fine. Else, if the instrument receives commands one by one but you can read them by one reading action,it is still fine, just set `multiline?'` as False. Else (very rare), you can download the branch "stable_write1_read1", which will read reply immediately after every writing.
+
+Another solution is to modifiy the code. Add a switch disabling the termination character when `count` is nonzero and calculate the exact bytes returned...
