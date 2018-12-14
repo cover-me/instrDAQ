@@ -1,3 +1,34 @@
+[MS4644B]
+CheckStr=5071
+RdName=fan{2000}
+RdCmd=:CALC1:DATA:FDAT?
+AdvPara=,,,3000/11
+[4G_9]
+CheckStr=4G
+RdName="B (9T)"
+RdCmd=IMAG?
+SwpAvl=TRUE
+OutName="B (9T): Sweep Up/B (9T): Sweep Down/B (9T): Sweep Zero"
+OutCmd="Sweep up slow&Sweep pause slow/Sweep down slow&Sweep pause slow/Sweep zero slow&Sweep pause slow"
+AdvPara="Chan 2"
+[4G_4]
+CheckStr=4G
+RdName="B (4T)"
+RdCmd=IMAG?
+SwpAvl=TRUE
+OutName="B (4T): Sweep Up/B (4T): Sweep Down/B (4T): Sweep Zero"
+OutCmd="Sweep up slow&Sweep pause slow/Sweep down slow&Sweep pause slow/Sweep zero slow&Sweep pause slow"
+AdvPara="Chan 1"
+[4G]
+CheckStr=4G
+RdName="B (9T)/B (4T)"
+RdCmd="CHAN 2;IMAG?/CHAN 1;IMAG?"
+SwpAvl=TRUE
+OutName="B (9T): Sweep Up/B (9T): Sweep Down/B (9T): Sweep Zero/B (4T): Sweep Up/B (4T): Sweep Down/B (4T): Sweep Zero"
+OutCmd="CHAN 2;Sweep up slow&CHAN 2;Sweep pause slow/CHAN 2;Sweep down slow&CHAN 2;Sweep pause slow/CHAN 2;Sweep zero slow&CHAN 2;Sweep pause slow/CHAN 1;Sweep up slow&CHAN 1;Sweep pause slow/CHAN 1;Sweep down slow&CHAN 1;Sweep pause slow/CHAN 1;Sweep zero slow&CHAN 1;Sweep pause slow"
+[myMonitor]
+RdName=Sample/He3
+RdCmd=4\0A/3\0A
 [4G_COM_Single]
 CheckStr=4G
 RdName="B (#)"
@@ -17,3 +48,155 @@ RdCmd="DOUT?/AUXV? 1/AUXV? 2"
 SwpAvl=FALSE
 OutName="#_AO1: ±10.000V/#_AO2: ±10.000V"
 OutCmd="AUXV 1, #/AUXV 2, #"
+[LI5640_3]
+CheckStr=LI5640
+RdName=#_D1&#_D2/#_OSCx&#_OSCi
+RdCmd=DOUT?/AMPL?
+SwpAvl=TRUE
+OutName="Time:(x(0.1), i(1))"
+OutCmd="AMPL #,##"
+[LI5640_4]
+CheckStr=LI5640
+RdName=#_D1&#_D2
+RdCmd=DOUT?
+SwpAvl=TRUE
+OutName=Time:#_20uV/Time:#_50uV/Time:#_300ms/Time:#_1s
+OutCmd="VSEN 12/VSEN 13/TCON 9/TCON 10"
+[2000]
+CheckStr=2000
+RdName=#_V
+RdCmd=DATA?
+[2182]
+CheckStr=2182
+RdName=#_V
+RdCmd=:FETCh?
+[24xx]
+CheckStr=24
+RdName=#_V&#_I&#_3&#_4&#_5
+RdCmd=:READ?
+SwpAvl=FALSE
+OutName="#_V: 单位V"
+OutCmd=":SOUR:VOLT #"
+[26xx]
+CheckStr=26
+RdName=#_I&#_V
+RdCmd=printnumber(smua.measure.iv())
+SwpAvl=FALSE
+OutName="#_I: 单位A/#_V: 单位V"
+OutCmd=smua.source.leveli=#/smua.source.levelv=#
+[26xx_LED]
+CheckStr=26
+RdName=LED_I&LED_V
+RdCmd=printnumber(smua.measure.iv())
+SwpAvl=True
+OutName="Time: 照光时间(s)"
+OutCmd="smua.source.output = smua.OUTPUT_ON&smua.source.output = smua.OUTPUT_OFF"
+[6221]
+CheckStr=6221
+RdName=#_I/#_V&#_time
+RdCmd=:SOUR:CURR?/:SENSE:DATA?
+SwpAvl=FALSE
+OutName="#_I: 单位A"
+OutCmd=":SOUR:CURR #"
+[IPS_tcp]
+CheckStr=IPS
+RdName="B (T)"
+RdCmd=READ:DEV:GRPZ:PSU:SIG:FLD
+SwpAvl=TRUE
+OutName="B (T)"
+OutCmd=SET:DEV:GRPZ:PSU:SIG:FSET:#;SET:DEV:GRPZ:PSU:ACTN:RTOS&SET:DEV:GRPZ:PSU:ACTN:HOLD
+AdvPara=,2,\0A
+[VRM_rt]
+CheckStr=IDN
+RdName=B&φ(0)&θ(rad)
+RdCmd=READ:SYS:VRM:VECT
+SwpAvl=TRUE
+OutName="B:(B,θ)/B:To 0T"
+OutCmd="SET:SYS:VRM:RVST:MODE:RATE:RATE:0.1:VSET:[# 0 ##]@5@seting parameters...;SET:SYS:VRM:ACTN:RTOS@5@start ramping...&SET:SYS:VRM:ACTN:HOLD@5@stopping.../SET:SYS:VRM:ACTN:RTOZ@5@start ramping...&SET:SYS:VRM:ACTN:HOLD@5@stopping..."
+AdvPara="SET:SYS:VRM:COO:SPH@5@VRM seting coordinate...,2,\0D\0A"
+[VRM_xy]
+CheckStr=IDN
+RdName=Bx&By&Bz
+RdCmd=READ:SYS:VRM:VECT
+SwpAvl=TRUE
+OutName="Bz:(z, rate)/Bz:To 0T"
+OutCmd="SET:SYS:VRM:RVST:MODE:RATE:RATE:##:VSET:[0 0 #]@3@seting parameters...;SET:SYS:VRM:ACTN:RTOS@5@start ramping...&SET:SYS:VRM:ACTN:HOLD@5@stopping.../SET:SYS:VRM:ACTN:RTOZ@5@start ramping...&SET:SYS:VRM:ACTN:HOLD@5@stopping..."
+AdvPara="SET:SYS:VRM:COO:CART@5@VRM seting coordinate...,2,\0D\0A"
+[DR]
+CheckStr=Triton
+RdName="MC plate/PT1/OVC"
+RdCmd=READ:DEV:T8:TEMP:SIG:TEMP/READ:DEV:T1:TEMP:SIG:TEMP/READ:DEV:P6:PRES:SIG:PRES
+SwpAvl=TRUE
+OutName="MC plate:SET T (K)/Time:(t, range in mA)"
+OutCmd=SET:DEV:T8:TEMP:LOOP:TSET:#/SET:DEV:T8:TEMP:LOOP:RANGE:##
+AdvPara=,2,\0A/FALSE,/20
+[DR_CD]
+CheckStr=Triton
+RdName=P1p/P2p/Mag/Coldp/MCc/MCp/MCb/OVC/P2
+RdCmd=READ:DEV:T7:TEMP:SIG:TEMP/READ:DEV:T2:TEMP:SIG:TEMP/READ:DEV:T13:TEMP:SIG:TEMP/READ:DEV:T4:TEMP:SIG:TEMP/READ:DEV:T5:TEMP:SIG:TEMP/READ:DEV:T8:TEMP:SIG:TEMP/READ:DEV:T10:TEMP:SIG:TEMP/READ:DEV:P6:PRES:SIG:PRES/READ:DEV:P2:PRES:SIG:PRES
+AdvPara=,2,\0A/FALSE,/20
+[DR_RuOxtest]
+CheckStr=Triton
+RdName=MCp/MCpr/MCb/MCbr
+RdCmd=READ:DEV:T8:TEMP:SIG:TEMP/READ:DEV:T8:TEMP:SIG:RES/READ:DEV:T10:TEMP:SIG:TEMP/READ:DEV:T10:TEMP:SIG:RES
+SwpAvl=TRUE
+OutName="MCp:SET T (K)/Time:(t, range in mA)/Time:(t, PID on)/Time:(t, PID off)"
+OutCmd=SET:DEV:T8:TEMP:LOOP:TSET:#/SET:DEV:T8:TEMP:LOOP:RANGE:##/SET:DEV:T8:TEMP:LOOP:MODE:ON/SET:DEV:T8:TEMP:LOOP:MODE:OFF
+AdvPara=,2,\0A/FALSE,/20
+[DR_TEP]
+RdName=c10/c11
+RdCmd=READ:DEV:T10:TEMP:SIG:TEMP/READ:DEV:T11:TEMP:SIG:TEMP
+AdvPara=,2,\0A/FALSE,/20
+[34410]
+CheckStr=34410
+RdName=#
+RdCmd=READ?
+[33521]
+CheckStr=33521
+RdName=#
+RdCmd=VOLT:OFFS?
+SwpAv1=FALSE
+OutName=#:33521B
+OutCmd="VOLT:OFFS #"
+[33621A]
+CheckStr=33621A
+RdName=Vpp/offset
+RdCmd=VOLT?/VOLT:OFFS?
+SwpAvl=FALSE
+OutName="Vpp: (V)/offset: (V)"
+OutCmd="VOLT #/VOLT:OFFS #"
+[ppms]
+RdName=T(K)/B(kG)
+RdCmd=READT\0D\0A/READB\0D\0A
+SwpAvl=TRUE
+OutName="T(K): Set T(K),rate(K per min)/B(kG): Set B(kG),rate(T per min)"
+OutCMD="SETT #,##\0D\0A/SETB #,##\0D\0A"
+AdvPara=,,/FALSE
+[MagLabPS]
+RdName=Field/BLM
+RdCmd="READ 0\0D\0A/READ 2\0D\0A"
+SwpAvl=TRUE
+OutName="Field:(T)/BLM:increment 0.045, 1 turn=4.925"
+OutCmd="SET 1,#\0D\0A/SET 3,#;SET 4\0D\0A"
+[SR830]
+CheckStr=830
+RdName=#d1&#d2
+RdCmd=SNAP?1,2
+[DS360]
+CheckStr=360
+RdName=DS360_OFF
+RdCmd=OFFS?
+SwpAv1=FALSE
+OutName=DS360_OFF:V
+OutCmd="OFFS #"
+[325]
+CheckStr=325
+RdName=#_T
+RdCmd="KRDG? A"
+[370]
+CheckStr=370
+RdName=#_T
+RdCmd="KRDG? 4"
+[7270_usb]
+RdName=7270_X
+RdCmd=X.\00
