@@ -200,3 +200,10 @@ RdCmd="KRDG? 4"
 [7270_usb]
 RdName=7270_X
 RdCmd=X.\00
+[GS210]
+CheckStr=GS
+RdName=#_V
+RdCmd=":SOUR:LEV?"
+SwpAvl=FALSE
+OutName="#_V: (V)"
+OutCmd =":SOUR:LEV #"
