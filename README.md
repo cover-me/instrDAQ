@@ -20,6 +20,7 @@
 * [Overview](#ovw)
 * [How to](#how2)
 * [Known problems](#np)
+* [Further reading](#fr)
 
 ## <a name="ovw">Overview</a>
 
@@ -148,3 +149,7 @@ Write a wrapper program like this https://github.com/cover-me/tcp-visa-server. C
 A typical GPIB instrument may take tens of milliseconds to prepare its data. To minimize the time of waiting, the program sends commands to all instruments before reading any replies, instead of fetching data from instruments one by one. Sometimes one needs to send multiple commands to one instrument for multiple readings. If the instrument works well with multiple commands in one line like `cmd1;cmd2;cmd3`, which is usually the case, everything is fine. Else, if the instrument only receives commands one by one, but you can read all results by a single reading, it is still fine, just set `multiline?'` to False. Else (very rare), you can download the branch "stable_write1_read1", which fetches data from instruments one by one and command by command.
 
 Another solution is to modify the code. Add a switch disabling the termination characters when `count` is nonzero and calculate the exact bytes returned...
+
+## <a name="fr">Further reading</a>
+
+* [A prototype for data taking programs](https://cover-me.github.io/2020/01/11/A-prototype-for-data-taking-programs.html)
