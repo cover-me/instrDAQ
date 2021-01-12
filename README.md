@@ -150,6 +150,35 @@ A typical GPIB instrument may take tens of milliseconds to prepare its data. To 
 
 Another solution is to modify the code. Add a switch disabling the termination characters when `count` is nonzero and calculate the exact bytes returned...
 
+## Screenshots of block diagrams
+
+Captured by the [Code Capture Tool](https://sourceforge.net/projects/lv-cct-tool/)
+
+main.vi
+
+![](documentation/images/main_BD.png)
+
+AcquisitionMain.vi
+
+![](documentation/images/AcquisitionMain_BD.png)
+
+toData.vi
+
+![](documentation/images/toData_BD.png)
+
+keepSweep.vi
+
+![](documentation/images/keepSweep_BD.png)
+
+myset.vi
+
+![](documentation/images/myset_BD.png)
+
+myWrite.vi
+
+![](documentation/images/myWrite_BD.png)
+
+
 ## <a name="fr">Further reading</a>
 
 * [A prototype for data taking programs](https://cover-me.github.io/2020/01/11/A-prototype-for-data-taking-programs.html)
