@@ -6,15 +6,15 @@
   
   * A discrete sweep sweeps a discrete, or step-by-step output such as gate voltages and source-drain voltages. _The program_, instead of the instrument, is responsible for a discrete sweep. The former sends commands to the latter one by one, setting the output step-by-step.
   
-  * 2D or 3D scan can be made with a sweep sequence.
+  * 2D or 3D scan can be made with a sweep sequence. However, there is no 2D or 3D visualization in this program.
   
   * More complicated sweeps are possible. You may need to write your wrapper program to wrap complicated sweeps or trying other programs such as qtlab (an open-source python-based data acquisition program). The combination of qtlab and qtplot (visualize 1d, 2d and slices of 3d data, perform mathematical filters...) is awesome. I have two videos [here](https://cover-me.github.io/2019/03/31/qtplot-demo.html) showing how they work.
 
-* The program communicates with instruments by VISA
+* This program communicates with instruments through VISA (virtual instrument software architecture) functions
 
-  * VISA behaviors like a translator who speaks all languages. With VISA, commands can be sent to or read from instruments with any interfaces, by the same VISA functions. One can simply use VISA write and VISA read functions to communicate with instruments through serial, GPIB, Ethernet or USB ports. Low-level drivers, which should be provided by instrument providers, may still be required.
+  * VISA is like a translator who speaks all interface languages. One can simply use `VISA write` and `VISA read` functions to communicate with instruments through serial, GPIB, Ethernet or USB ports, instead of using GPIB functions for GPIB ports and RS232 functions for serial ports. Low-level drivers (USB-GPIB controller drivers, usb-serial adapter drivers), which should be provided by hardware providers, may still be required if your operating system does not recognized them automatically.
 
-  * Instrument parameters such as addresses, commands, and interface-parameters are collected in text files. New-instrument support can be done without changing the program itself!
+* Parameters such as addresses, commands, and interface settings are collected in INI (text) files. New instrument support can be added without changing the program itself, nor the LabVIEW enviroment is needed!
 
 ## Table of Contents
 * [Overview](#ovw)
@@ -32,11 +32,11 @@
 ## <a name="how2">How to</a>
 ### Install
 * Download the whole project and open it with LabVIEW 8.6 or newer versions.
-* Run main.vi or compile it into a .exe. The former enables one to run the program on a Mac even if it was developed on a PC. The latter enables one to run the program on a computer without LabVIEW (but LabVIEW runtime is required).
-* Make sure NI-VISA and other device drivers (such as NI-4882) have been installed.
+* Run main.vi or compile it into a .exe. The former enables one to run the program on a Mac even if it was developed on a PC. The latter enables one to run the program on a computer without LabVIEW (LabVIEW runtime engine is required, the runtime engine is free).
+* Make sure NI-VISA and other device drivers (such as NI-4882 for your USB-GPIB card, drivers for USB-Serial adaptors) have been installed.
 ### Read data from instruments, such as an SR830 lock-in amplifier or a 2400 sourcemeter
-* Connect instruments to your computer. Check the connection by sending simple commands. Many instruments would respond to the command `*IDN?`, which queries the instrument identifications. Be familiar with your instruments by reading manuals.
-* Find the command for taking data. Commands you need should be listed somewhere in manuals. For SR830, the command returning x and y readings is `SNAP?1,2`.
+* Connect instruments to your computer. Check the connection by sending simple commands. Many instruments would respond to the command `*IDN?`, which queries the instrument identifications. A good idea to find the command list is downloading the user manual/reference manual and search for `*IDN?`, `programming` or `command`.
+* Find the command for taking data. The command should be listed in manuals. For SR830, the command returning x and y readings is `SNAP?1,2`. Note that if you are working with RS232 or Ethernet, you may also need to check the termination character out. It is a character(s), usually `\n` or `\r\n`, used at the end of a message so that the listener knows where the talker ends. In most cases, GPIB  uses a physical line called EOL instead of charactors to end a message. In INI files `\r\n` should be written as `\0D\0A`.
 * Add the following code to the file "Model". This is the file stores parameters for different instrument models. You can run main.vi or .exe without a Model file, they will generate an empty one, usually in the same folder but sometimes in the parent folder (depends on LabVIEW versions and operating systems).
 ```
 [SR830]
@@ -129,7 +129,7 @@ A rightmost `/` in square brackets or a rightmost `,` can be omitted. For exampl
 * `init cmd`: The command which will send to the instrument during the initialization step. Since `,` has its special meaning in `AdvPara`, an `init cmd` containing `,` would lead to errors in the current version.
 * `echo`: 0 if no command echoes. 1 if commands for reading data echo. 2 if the commands for setting echo. 3 if both kinds of command echo. If a command echoes, you need to read for one extra time before getting the desired response.
 * `baud rate/data bits/parity/stop bits`: Parameters for a serial port. Valid only if the interface type is the serial port and these 4 parameters and `echo` are all not empty.
-* `terminator`: Terminator of commands. 
+* `terminator`: Termination charactors. They are sometimes required for Eithernet or serial communications. Terminators can be set here, or directly in `RdCmd` and `OutCmd` (if they are only required for writting commands to an instrument, i.e., not required for reading). In INI files we use `\0D`, `\0A` instead of `\r`, `\n`. 
 * `multiline?`: By default, commands sent to the same instrument will be packed into one string, seperated by `;`. Add something like `AdvPara=,,/FALSE` to avoid packing.
 * `count`: Number of bytes read by the `VISA Read` function. Valid only if >128.
 * `offset`: The program converts every number in a string returned by the `VISA Read` function. Use `offset` to intercepts a portion of the string.
